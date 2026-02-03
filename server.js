@@ -39,5 +39,10 @@ app.get('/getStatus', (req, res) => {
 
 app.get('/', (req, res) => res.send('Bridge Active ✅'));
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
+// Use the PORT provided by Railway, or default to 8080
+const PORT = process.env.PORT || 8080; 
+
+// Explicitly listen on 0.0.0.0 so it's accessible externally
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server is live on port ${PORT}`);
+});
