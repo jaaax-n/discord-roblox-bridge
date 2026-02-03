@@ -23,17 +23,12 @@ app.get('/getCommand', (req, res) => {
     }
 });
 
-// THIS WAS LIKELY MISSING AND CAUSED YOUR ERROR
 app.post('/markDone', (req, res) => {
-    lastStatus = { status: "Done", matchedName: req.body.matchedName };
+    lastStatus = { status: "Done", matchedName: req.body.matchedName || "Success" };
     res.json({ success: true });
 });
 
-app.get('/getStatus', (req, res) => {
-    res.json(lastStatus);
-});
-
-app.get('/', (req, res) => res.send('Bridge Active ✅'));
+app.get('/getStatus', (req, res) => res.json(lastStatus));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
