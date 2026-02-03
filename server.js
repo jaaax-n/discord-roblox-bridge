@@ -6,10 +6,10 @@ app.use(express.json());
 app.use(cors());
 
 let commandQueue = [];
-let lastStatus = { status: "idle", matchedName: "" }; // Store completion status
+let lastStatus = { status: "idle", matchedName: "" };
 
 app.post('/command', (req, res) => {
-    lastStatus = { status: "pending", matchedName: "" }; // Reset on new command
+    lastStatus = { status: "pending", matchedName: "" };
     commandQueue.push({ ...req.body, timestamp: Date.now() });
     if (commandQueue.length > 10) commandQueue.shift();
     res.json({ success: true });
@@ -23,13 +23,12 @@ app.get('/getCommand', (req, res) => {
     }
 });
 
-// NEW: Roblox calls this to say "I'm done"
+// THIS WAS LIKELY MISSING AND CAUSED YOUR ERROR
 app.post('/markDone', (req, res) => {
     lastStatus = { status: "Done", matchedName: req.body.matchedName };
     res.json({ success: true });
 });
 
-// NEW: Discord bot checks this to see if it should say "Done"
 app.get('/getStatus', (req, res) => {
     res.json(lastStatus);
 });
